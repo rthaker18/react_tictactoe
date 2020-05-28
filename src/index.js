@@ -1,3 +1,6 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
@@ -83,6 +86,7 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
+    const is_draw = how_many(current.squares) === 9;
 
     const moves = history.map((step, move) => {
       const desc = move ?
@@ -98,6 +102,8 @@ class Game extends React.Component {
     let status;
     if (winner) {
       status = "Winner: " + winner;
+    } else if (is_draw) {
+      status = "Draw!"
     } else {
       status = "Next player: " + (this.state.xIsNext ? "X" : "O");
     }
@@ -141,4 +147,14 @@ function calculateWinner(squares) {
     }
   }
   return null;
+}
+
+function how_many(squares) {
+  let count = 0
+  for (let i = 0; i < squares.length; i++) {
+    if (squares[i]){
+      count++;
+    }
+  }
+  return count;
 }
